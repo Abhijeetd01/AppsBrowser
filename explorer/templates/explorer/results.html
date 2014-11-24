@@ -1,8 +1,36 @@
-<table>
-    {% for app in apps %}
-        <tr>
-            <td>{{ app.title }}</td>
-            <td>{{ app.price }}</td>
-        </tr>
-    {% endfor %}
-</table>
+{% if apps %}
+    <table id="apps">
+        {% for app in apps %}
+            <tr>
+                <td>{{ app.title }}</td>
+                <td>{{ app.lang_id }}</td>
+                <td>{{ app.cluster_id }}</td>
+                <td>{{ app.price }}</td>
+                <td>{{ app.category }}</td>
+                <td>{{ app.content_rating }}</td>
+                <td>{{ app.reviewers }}</td>
+                <td>{{ app.rating }}</td>
+                <td>{{ app.description }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# .... **Now the pagination section** .... #}
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?app_title={{ request.GET.app_title }}&price={{ request.GET.price }}&content_rating={{ request.GET.content_rating }}&downloads={{ request.GET.downloads }}&rating={{ request.GET.rating }}&category={{ request.GET.category }}&cluster={{ request.GET.cluster }}&language={{ request.GET.language }}&page={{ page_obj.previous_page_number }}">next</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?app_title={{ request.GET.app_title }}&price={{ request.GET.price }}&content_rating={{ request.GET.content_rating }}&downloads={{ request.GET.downloads }}&rating={{ request.GET.rating }}&category={{ request.GET.category }}&cluster={{ request.GET.cluster }}&language={{ request.GET.language }}&page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% else %}
+    <h3>Apps</h3>
+    <p>No Results found!!! :(</p>
+{% endif %}

@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 import explorer.base.search_form as sf
 from django.shortcuts import render_to_response
+from django.db.models import Q
 
 
 class IndexView(generic.ListView):
@@ -24,14 +25,19 @@ class DetailView(generic.DetailView):
     template_name = 'explorer/index.html'
 
 
+# the only way is if we wrote it into a database and read it from the other side but that would be wrong!!
+
+
 class ResultsView(generic.ListView):
-    print "Soemthing"
     model = DataEm
     template_name = 'explorer/results.html'
     context_object_name = 'apps'
+    paginate_by = 10
 
+    def get_queryset(self):
+        apps = get_data(self.request)
+        return apps
 
-#the only way is if we wrote it into a database and read it from the other side but that would be wrong!!
 
 class SearchView(generic.FormView):
     template_name = 'explorer/search.html'
@@ -39,26 +45,72 @@ class SearchView(generic.FormView):
     success_url = '/explorer/results/'
 
 
-    # response_class = ResultsView
+def get_data(request):
+    name = request.GET['app_title']
+    price = request.GET['price']
+    content_rating = request.GET['content_rating']
+    downloads = request.GET['downloads']
+    user_rating = request.GET['rating']
+    category = request.GET['category']
+    cluster = request.GET['cluster']
+    language = request.GET['language']
 
-    # def form_valid(self, form):
-    #     print "validating..."
-    #     # name = form.cleaned_data['App_title']
-    #     # apps = DataEm.objects.filter(title__contains=name)
-    #     # print type(apps)
-    #     # for app in apps:
-    #     # print "%s %s %s %s %s" % (app.title, app.developer, app.price, app.category, app.cluster_id)
-    #     # # return HttpResponseRedirect(reverse('explorer:results', args=(apps,)))
-    #     # # return redirect('explorer:results', apps)
-    #     return render_to_response('explorer/results.html', get_data(form))
+    apps = []
 
-    # def done(self, form):
-    #     return render_to_response('explorer/results.html', get_data(form))
+    if len(name) != 0:
+        apps = DataEm.objects.filter(title__contains=name)
+
+    if price != 'all':
+        if price == 'free':
+            temp_apps = DataEm.objects.filter(price=0)
+        else:
+            temp_apps = DataEm.objects.filter(price__gt=0)
+        apps = verify(apps, temp_apps)
+
+    if content_rating != 'All':
+        temp_apps = DataEm.objects.filter(content_rating=content_rating)
+        apps = verify(apps, temp_apps)
+
+    if downloads != 'All':
+        temp_apps = DataEm.objects.filter(downloads=downloads)
+        apps = verify(apps, temp_apps)
+
+    if user_rating != 'Any':
+        if user_rating == '>1':
+            temp_apps = DataEm.objects.filter(rating__gte=1.0)
+        elif user_rating == '>2':
+            temp_apps = DataEm.objects.filter(rating__gte=2.0)
+        elif user_rating == '>3':
+            temp_apps = DataEm.objects.filter(rating__gte=3.0)
+        elif user_rating == '4':
+            temp_apps = DataEm.objects.filter(rating__gte=4.0)
+        else:
+            temp_apps = DataEm.objects.filter(rating=5)
+        apps = verify(apps, temp_apps)
+
+    if category != 'All':
+        temp_apps = DataEm.objects.filter(category=category)
+        apps = verify(apps, temp_apps)
+
+    if cluster != 'Any':
+        temp_apps = DataEm.objects.filter(cluster_id=cluster)
+        apps = verify(apps, temp_apps)
+
+    if language != 'All':
+        if language == 'other':
+            temp_apps = DataEm.objects.filter(~Q(lang_id='ar') & ~Q(lang_id='en'))
+        else:
+            temp_apps = DataEm.objects.filter(lang_id=language)
+
+        apps = verify(apps, temp_apps)
+    return apps
 
 
-def get_data(form):
-    name = form.cleaned_data['App_title']
-    apps = DataEm.objects.filter(title__contains=name)
+def verify(apps, temp_apps):
+    if len(apps) == 0:
+        apps = temp_apps
+    else:
+        apps = apps & temp_apps
     return apps
 
 
