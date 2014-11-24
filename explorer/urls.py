@@ -5,9 +5,9 @@ from explorer import views
 
 urlpatterns = patterns('',
     # ex: /polls/
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.SearchView.as_view(), name='search'),
     url(r'^search/$', views.SearchView.as_view(), name='search'),
-    url(r'^results/$', views.ResultsView.as_view(paginate_by=10), name='results'),
+    url(r'^results/$', views.ResultsView.as_view(paginate_by=100), name='results'),
 
     # ex: /polls/5/
     url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),

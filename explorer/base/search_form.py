@@ -44,7 +44,9 @@ class SearchForm(forms.Form):
         ('Education', 'Education'),
         ('Productivity', 'Productivity'))
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, label='Category')
-    CLUSTER_CHOICES = (('Any', 'Any'), ('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'))
+    CLUSTER_CHOICES = (
+    ('Any', 'Any'), ('6', '6: perfect apps'), ('1', '1: successful apps'), ('4', '4: high rated apps with average downloads'),
+    ('0', '0: high rated apps with low downloads'), ('2', '2: average to low apps'), ('3', '3: no good apps'))
     cluster = forms.ChoiceField(choices=CLUSTER_CHOICES, label='Cluster')
 
     LANGUAGE_CHOICE = (('All', 'All'), ('en', 'En'), ('ar', 'Ar'), ('other', 'Other'))

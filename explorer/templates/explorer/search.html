@@ -1,10 +1,15 @@
-<!--{% load staticfiles %}-->
-        <!--<link rel = "stylesheet" type = "text/css" href ="{% static 'explorer/style.css' %}" />-->
+{% load staticfiles %}
+        <link rel = "stylesheet" type = "text/css" href ="{% static 'explorer/style.css' %}" />
+        <link rel = "stylesheet" type = "text/css" href ="{% static 'explorer/pure.css' %}" />
 <!--{% load crispy_forms_tags %}-->
 <!--{% load bootstrap %}-->
-{% load bootstrap_toolkit %}
+<!--{% load bootstrap_toolkit %}-->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">-->
 <form action='{% url "explorer:results" %}' method='get'>
-
-    {{ form|as_bootstrap }}
-<input type='submit' value='Search' />
+    {{ form|bootstrap_horizontal }}
+<div class="form-group">
+<div class="col-sm-12">
+    <input type="submit" class="btn btn-primary" value="Search" />
+</div>
+</div>
 </form>

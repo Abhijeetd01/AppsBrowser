@@ -1,25 +1,278 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'explorer/style.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'explorer/pure.css' %}"/>
+
+
+<form action='/explorer/results/' method='get'>
+
+
+<div class="form-group">
+
+
+    <label class="control-label col-sm-2 col-lg-2 " for="id_app_title">App title</label>
+
+
+    <div class=" col-sm-10 col-lg-10 ">
+        <input class=" form-control" id="id_app_title" maxlength="200" name="app_title" type="text"/>
+
+
+        <p class="help-block">
+            part or whole of the app name
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="form-group">
+
+
+    <label class="control-label col-sm-2 col-lg-2 " for="id_price">Price</label>
+
+
+    <div class=" col-sm-10 col-lg-10 ">
+        <select class=" form-control" id="id_price" name="price">
+            <option value="all">All</option>
+            <option value="free">Free</option>
+            <option value="paid">Paid</option>
+        </select>
+
+
+    </div>
+
+</div>
+
+
+<div class="form-group">
+
+
+    <label class="control-label col-sm-2 col-lg-2 " for="id_content_rating">Content Rating</label>
+
+
+    <div class=" col-sm-10 col-lg-10 ">
+        <select class=" form-control" id="id_content_rating" name="content_rating">
+            <option value="All">All</option>
+            <option value="Everyone">Everyone</option>
+            <option value="Low Maturity">Low Maturity</option>
+            <option value="Medium Maturity">Medium Maturity</option>
+            <option value="High Maturity">High Maturity</option>
+        </select>
+
+
+    </div>
+
+</div>
+
+
+<div class="form-group">
+
+
+    <label class="control-label col-sm-2 col-lg-2 " for="id_downloads">Downloads</label>
+
+
+    <div class=" col-sm-10 col-lg-10 ">
+        <select class=" form-control" id="id_downloads" name="downloads">
+            <option value="All">All</option>
+            <option value="0">0</option>
+            <option value="1 - 5">1 - 5</option>
+            <option value="5 - 10">5 - 10</option>
+            <option value="10 - 50">10 - 50</option>
+            <option value="50 - 100">50 - 100</option>
+            <option value="100 - 500">100 - 500</option>
+            <option value="500 - 1,000">500 - 1K</option>
+            <option value="1,000 - 5,000">1K - 5K</option>
+            <option value="5,000 - 10,000">5K - 10K</option>
+            <option value="10,000 - 50,000">10K - 50K</option>
+            <option value="50,000 - 100,000">50K - 100K</option>
+            <option value="100,000 - 500,000">100K - 500K</option>
+            <option value="500,000 - 1,000,000">500K - 1M</option>
+            <option value="1,000,000 - 5,000,000">1M - 5M</option>
+            <option value="5,000,000 - 10,000,000">5M - 10M</option>
+            <option value="10,000,000 - 50,000,000">10M - 50M</option>
+            <option value="50,000,000 - 100,000,000">50M - 100M</option>
+            <option value="100,000,000 - 500,000,000">100M - 500M</option>
+            <option value="500,000,000 - 1,000,000,000">500M - 1B</option>
+            <option value="1,000,000,000 - 5,000,000,000">1B - 5B</option>
+        </select>
+
+
+    </div>
+
+</div>
+
+
+<div class="form-group">
+
+
+    <label class="control-label col-sm-2 col-lg-2 " for="id_rating">User rating</label>
+
+
+    <div class=" col-sm-10 col-lg-10 ">
+        <select class=" form-control" id="id_rating" name="rating">
+            <option value="Any">Any</option>
+            <option value="&gt;1">&gt;1</option>
+            <option value="&gt;2">&gt;2</option>
+            <option value="&gt;3">&gt;3</option>
+            <option value="&gt;4">&gt;4</option>
+            <option value="5">5</option>
+        </select>
+
+
+    </div>
+
+</div>
+
+
+<div class="form-group">
+
+
+    <label class="control-label col-sm-2 col-lg-2 " for="id_category">Category</label>
+
+
+    <div class=" col-sm-10 col-lg-10 ">
+        <select class=" form-control" id="id_category" name="category">
+            <option value="All">All</option>
+            <option value="Educational">Educational</option>
+            <option value="Puzzle">Puzzle</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Racing">Racing</option>
+            <option value="uncategorized">uncategorized</option>
+            <option value="Family">Family</option>
+            <option value="Role Playing">Role Playing</option>
+            <option value="Action">Action</option>
+            <option value="Finance">Finance</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Health &amp; Fitness">Health &amp; Fitness</option>
+            <option value="Simulation">Simulation</option>
+            <option value="Arcade">Arcade</option>
+            <option value="Libraries &amp; Demo">Libraries &amp; Demo</option>
+            <option value="Social">Social</option>
+            <option value="Board">Board</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Sports">Sports</option>
+            <option value="Books &amp; Reference">Books &amp; Reference</option>
+            <option value="Media &amp; Video">Media &amp; Video</option>
+            <option value="Strategy">Strategy</option>
+            <option value="Business">Business</option>
+            <option value="Medical">Medical</option>
+            <option value="Tools">Tools</option>
+            <option value="Card">Card</option>
+            <option value="Music">Music</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Casino">Casino</option>
+            <option value="Music &amp; Audio">Music &amp; Audio</option>
+            <option value="Travel &amp; Local">Travel &amp; Local</option>
+            <option value="Casual">Casual</option>
+            <option value="News &amp; Magazines">News &amp; Magazines</option>
+            <option value="Trivia">Trivia</option>
+            <option value="Comics">Comics</option>
+            <option value="Personalization">Personalization</option>
+            <option value="Weather">Weather</option>
+            <option value="Communication">Communication</option>
+            <option value="Photography">Photography</option>
+            <option value="Word">Word</option>
+            <option value="Education">Education</option>
+            <option value="Productivity">Productivity</option>
+        </select>
+
+
+    </div>
+
+</div>
+
+
+<div class="form-group">
+
+
+    <label class="control-label col-sm-2 col-lg-2 " for="id_cluster">Cluster</label>
+
+
+    <div class=" col-sm-10 col-lg-10 ">
+        <select class=" form-control" id="id_cluster" name="cluster">
+            <option value="Any">Any</option>
+            <option value="6">6: perfect apps</option>
+            <option value="1">1: successful apps</option>
+            <option value="4">4: high rated apps with average downloads</option>
+            <option value="0">0: high rated apps with low downloads</option>
+            <option value="2">2: average to low apps</option>
+            <option value="3">3: no good apps</option>
+        </select>
+
+
+    </div>
+
+</div>
+
+
+<div class="form-group">
+
+
+    <label class="control-label col-sm-2 col-lg-2 " for="id_language">Language</label>
+
+
+    <div class=" col-sm-10 col-lg-10 ">
+        <select class=" form-control" id="id_language" name="language">
+            <option value="All">All</option>
+            <option value="en">En</option>
+            <option value="ar">Ar</option>
+            <option value="other">Other</option>
+        </select>
+
+
+    </div>
+
+</div>
+
+
+<div class="form-group">
+    <div class="col-sm-12">
+        <input type="submit" class="btn btn-primary" value="Search"/>
+    </div>
+</div>
+</form>
+<p style="padding:10px; color:white">__</p>
 {% if apps %}
-    <table id="apps">
-        {% for app in apps %}
-            <tr>
-                <td>{{ app.title }}</td>
-                <td>{{ app.lang_id }}</td>
-                <td>{{ app.cluster_id }}</td>
-                <td>{{ app.price }}</td>
-                <td>{{ app.category }}</td>
-                <td>{{ app.content_rating }}</td>
-                <td>{{ app.reviewers }}</td>
-                <td>{{ app.rating }}</td>
-                <td>{{ app.description }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    {# .... **Now the pagination section** .... #}
-    {% if is_paginated %}
-        <div class="pagination">
+
+<table class="pure-table pure-table-striped" id="apps">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Language</th>
+        <th>Cluster</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Content Rating</th>
+        <th>Reviewers Count</th>
+        <th>Download Range</th>
+        <th>Rating</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    {% for app in apps %}
+    <tr>
+        <td><a href="{{ app.app_url }}">{{ app.title }}</a></td>
+        <td>{{ app.lang_id }}</td>
+        <td>{{ app.cluster_id }}</td>
+        <td>{{ app.price }}</td>
+        <td>{{ app.category }}</td>
+        <td>{{ app.content_rating }}</td>
+        <td>{{ app.reviewers }}</td>
+        <td>{{ app.downloads }}</td>
+        <td>{{ app.rating }}</td>
+        <td><textarea rows="10" cols="50">{{ app.description }}</textarea></td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{# .... **Now the pagination section** .... #}
+{% if is_paginated %}
+<div class="pagination">
             <span class="page-links">
                 {% if page_obj.has_previous %}
-                    <a href="?app_title={{ request.GET.app_title }}&price={{ request.GET.price }}&content_rating={{ request.GET.content_rating }}&downloads={{ request.GET.downloads }}&rating={{ request.GET.rating }}&category={{ request.GET.category }}&cluster={{ request.GET.cluster }}&language={{ request.GET.language }}&page={{ page_obj.previous_page_number }}">next</a>
+                    <a href="?app_title={{ request.GET.app_title }}&price={{ request.GET.price }}&content_rating={{ request.GET.content_rating }}&downloads={{ request.GET.downloads }}&rating={{ request.GET.rating }}&category={{ request.GET.category }}&cluster={{ request.GET.cluster }}&language={{ request.GET.language }}&page={{ page_obj.previous_page_number }}">previous</a>
                 {% endif %}
                 <span class="page-current">
                     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
@@ -28,9 +281,10 @@
                     <a href="?app_title={{ request.GET.app_title }}&price={{ request.GET.price }}&content_rating={{ request.GET.content_rating }}&downloads={{ request.GET.downloads }}&rating={{ request.GET.rating }}&category={{ request.GET.category }}&cluster={{ request.GET.cluster }}&language={{ request.GET.language }}&page={{ page_obj.next_page_number }}">next</a>
                 {% endif %}
             </span>
-        </div>
-    {% endif %}
-{% else %}
-    <h3>Apps</h3>
-    <p>No Results found!!! :(</p>
+</div>
 {% endif %}
+{% else %}
+<h3>Apps</h3>
+<p>No Results found!!! :(</p>
+{% endif %}
+

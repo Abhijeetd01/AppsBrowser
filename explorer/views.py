@@ -9,6 +9,7 @@ from django.views import generic
 import explorer.base.search_form as sf
 from django.shortcuts import render_to_response
 from django.db.models import Q
+from django.views.generic.edit import FormMixin
 
 
 class IndexView(generic.ListView):
@@ -35,6 +36,7 @@ class ResultsView(generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
+        print "here"
         apps = get_data(self.request)
         return apps
 
@@ -42,23 +44,41 @@ class ResultsView(generic.ListView):
 class SearchView(generic.FormView):
     template_name = 'explorer/search.html'
     form_class = sf.SearchForm
-    success_url = '/explorer/results/'
+    success_url = '/explorer/resutls/'
+
+
+# Trying to mix the two views in one
+class SearchView__(generic.FormView):
+    template_name = 'explorer/search.html'
+    form_class = sf.SearchForm
+    success_url = '/explorer/search/'
+
+    model = DataEm
+    paginate_by = 10
+    context_object_name = 'apps'
+
+    def get_queryset(self):
+        print "we're here"
+        apps = get_data(self.request)
+        return apps
 
 
 def get_data(request):
-    name = request.GET['app_title']
-    price = request.GET['price']
-    content_rating = request.GET['content_rating']
-    downloads = request.GET['downloads']
-    user_rating = request.GET['rating']
-    category = request.GET['category']
-    cluster = request.GET['cluster']
-    language = request.GET['language']
-
+    try:
+        name = request.GET['app_title']
+        price = request.GET['price']
+        content_rating = request.GET['content_rating']
+        downloads = request.GET['downloads']
+        user_rating = request.GET['rating']
+        category = request.GET['category']
+        cluster = request.GET['cluster']
+        language = request.GET['language']
+    except:
+        return []
     apps = []
 
     if len(name) != 0:
-        apps = DataEm.objects.filter(title__contains=name)
+        apps = DataEm.objects.filter(title__icontains=name)
 
     if price != 'all':
         if price == 'free':
@@ -103,6 +123,9 @@ def get_data(request):
             temp_apps = DataEm.objects.filter(lang_id=language)
 
         apps = verify(apps, temp_apps)
+        # if no criteria specified, return everything:
+    if len(name) == 0 and price == 'all' and content_rating == 'All' and downloads == 'All' and user_rating == 'Any' and category == 'All' and cluster == 'Any' and language == 'All':
+        apps = DataEm.objects.all()
     return apps
 
 
